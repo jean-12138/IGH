@@ -231,6 +231,7 @@ void cyclic_task()
 
 		// write application time to master
 		clock_gettime(CLOCK_TO_USE, &time);
+		// http://lists.etherlab.org/pipermail/etherlab-users/2016/003013.html
 		ecrt_master_application_time(master, TIMESPEC2NS(time));
 
 		if (sync_ref_counter) {
@@ -303,12 +304,15 @@ int main(int argc, char **argv)
         return -1;
 
     // configure SYNC signals for this slave
+	// sync0_cycle即为sync0的循环周期，和主栈的周期任务的循环周期保持一致
+	// sync0_shift为启动sync0同步信号的偏移时间
 	ecrt_slave_config_dc(sc, 0x0700, PERIOD_NS, 4400000, 0, 0);
 
     printf("Activating master...\n");
     if (ecrt_master_activate(master))
         return -1;
 
+	// get the data pointer of domain1
     if (!(domain1_pd = ecrt_domain_data(domain1))) {
         return -1;
     }

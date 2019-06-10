@@ -345,7 +345,10 @@ int ecrt_slave_config_reg_pdo_entry_pos(
 }
 
 /*****************************************************************************/
-
+/*
+ * sync0_cycle即为sync0的循环周期，和主栈的周期任务的循环周期保持一致
+ * sync0_shift为启动sync0同步信号的偏移时间
+ */
 void ecrt_slave_config_dc(ec_slave_config_t *sc, uint16_t assign_activate,
         uint32_t sync0_cycle_time, int32_t sync0_shift_time,
         uint32_t sync1_cycle_time, int32_t sync1_shift_time)
